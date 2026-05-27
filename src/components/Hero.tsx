@@ -50,20 +50,20 @@ export function Hero() {
           className="relative inline-flex items-center justify-center mt-2"
         >
           <div
-            className="absolute -left-16 md:-left-20 -top-2 text-red-500 pointer-events-none"
+            className="absolute -left-16 md:-left-24 -top-4 text-red-500 pointer-events-none"
           >
-            <svg width="70" height="70" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(-15deg)' }}>
+            <svg width="80" height="80" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(-10deg)' }}>
               <motion.path 
-                d="M10,80 Q30,20 85,45"
+                d="M 15 85 C 10 40, 30 25, 85 50"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse", repeatDelay: 0.5 }}
+                transition={{ duration: 1.2, ease: "easeInOut", repeat: Infinity, repeatDelay: 1.5 }}
               />
               <motion.path 
-                d="M65,25 L85,45 L60,55"
+                d="M 65 35 L 85 50 L 60 70"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse", repeatDelay: 0.5 }}
+                transition={{ duration: 1.2, ease: "easeInOut", repeat: Infinity, repeatDelay: 1.5 }}
               />
             </svg>
           </div>
