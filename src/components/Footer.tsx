@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Instagram, Linkedin, Facebook } from 'lucide-react';
+import { useSiteSettings } from '../lib/supabase';
 
 function BehanceIcon({ size = 24 }: { size?: number }) {
   return (
@@ -10,6 +11,8 @@ function BehanceIcon({ size = 24 }: { size?: number }) {
 }
 
 export function Footer() {
+  const settings = useSiteSettings();
+
   return (
     <motion.footer 
       initial={{ opacity: 0, filter: 'blur(8px)' }}
@@ -22,19 +25,21 @@ export function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12 mb-16">
         <div>
           <a href="#" className="text-2xl font-bold font-heading text-text-main block mb-2 hover:text-accent transition-colors">
-            Suvro Mollick
+            {settings.site_name || "Suvro Mollick"}
           </a>
-          <p className="text-muted text-sm">Thumbnail Designer & Strategist</p>
+          <p className="text-muted text-sm max-w-[280px]">
+            {settings.whatsapp_number ? `WhatsApp: ${settings.whatsapp_number}` : 'Thumbnail Designer & Strategist'}
+          </p>
         </div>
         
         <div className="flex gap-4">
-          <a href="https://www.instagram.com/a_suvro09" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-[5px] bg-black text-white flex items-center justify-center hover:opacity-90 transition-opacity shadow-sm">
+          <a href={settings.instagram_url || "https://www.instagram.com/a_suvro09"} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-[5px] bg-black text-white flex items-center justify-center hover:opacity-90 transition-opacity shadow-sm">
             <Instagram size={20} />
           </a>
-          <a href="https://www.behance.net/suvro_09" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-[5px] bg-black text-white flex items-center justify-center hover:opacity-90 transition-opacity shadow-sm">
+          <a href={settings.behance_url || "https://www.behance.net/suvro_09"} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-[5px] bg-black text-white flex items-center justify-center hover:opacity-90 transition-opacity shadow-sm">
             <BehanceIcon size={22} />
           </a>
-          <a href="https://www.facebook.com/a.suvro09" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-[5px] bg-black text-white flex items-center justify-center hover:opacity-90 transition-opacity shadow-sm">
+          <a href={settings.facebook_url || "https://www.facebook.com/a.suvro09"} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-[5px] bg-black text-white flex items-center justify-center hover:opacity-90 transition-opacity shadow-sm">
             <Facebook size={20} />
           </a>
         </div>
@@ -42,7 +47,7 @@ export function Footer() {
       
       <div className="max-w-7xl mx-auto flex flex-col items-center justify-center pt-8 border-t border-black/5">
         <p className="text-muted/80 text-sm">
-          © {new Date().getFullYear()} Suvro Mollick. All rights reserved.
+          © {new Date().getFullYear()} {settings.site_name || "Suvro Mollick"}. All rights reserved.
         </p>
       </div>
     </motion.footer>

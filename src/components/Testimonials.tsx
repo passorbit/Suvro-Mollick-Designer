@@ -1,18 +1,41 @@
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { supabase, Testimonial } from '../lib/supabase';
 
-const testimonials = [
-  { name: "Elena Rodriguez", role: "Youtuber", text: "This graphic designer went above and beyond in creating a brand identity for my business. The quality of their work is top-notch, and they made sure every detail was perfect. Their ability to bring concepts to life is truly impressive. I highly recommend them for any design needs." },
-  { name: "Marcus Chen", role: "Youtuber", text: "I was really impressed with this graphic designer's responsiveness and ability to adapt to my needs. They provided fantastic design options and were patient with all the revisions I requested. The final product was exactly what I envisioned. A fantastic experience overall!" },
-  { name: "Sarah Jenkins", role: "Content Creator", text: "I've worked with many designers, but Suvro is by far the most talented and professional. They listen carefully to my ideas and deliver exactly what I'm looking for every time. Plus, the turnaround time is always incredibly fast." },
-  { name: "David Park", role: "Gaming Creator", text: "Suvro completely transformed my channel's CTR. We went from 4% to 9% on average!" },
-  { name: "Rachel Adams", role: "Vlogger (500k Subs)", text: "My views skyrocketed after switching to Suvro's thumbnails. Simply the best." },
-  { name: "Michael Torres", role: "Educational Channel", text: "Professional, responsive, and insanely talented. Best investment for my channel." },
+const fallbackTestimonials = [
+  { name: "Elena Rodriguez", role: "Youtuber", text: "This graphic designer went above and beyond in creating a brand identity for my business. The quality of their work is top-notch, and they made sure every detail was perfect. Their ability to bring concepts to life is truly impressive. I highly recommend them for any design needs.", rating: 5, avatar_url: null },
+  { name: "Marcus Chen", role: "Youtuber", text: "I was really impressed with this graphic designer's responsiveness and ability to adapt to my needs. They provided fantastic design options and were patient with all the revisions I requested. The final product was exactly what I envisioned. A fantastic experience overall!", rating: 5, avatar_url: null },
+  { name: "Sarah Jenkins", role: "Content Creator", text: "I've worked with many designers, but Suvro is by far the most talented and professional. They listen carefully to my ideas and deliver exactly what I'm looking for every time. Plus, the turnaround time is always incredibly fast.", rating: 5, avatar_url: null },
+  { name: "David Park", role: "Gaming Creator", text: "Suvro completely transformed my channel's CTR. We went from 4% to 9% on average!", rating: 5, avatar_url: null },
+  { name: "Rachel Adams", role: "Vlogger (500k Subs)", text: "My views skyrocketed after switching to Suvro's thumbnails. Simply the best.", rating: 5, avatar_url: null },
+  { name: "Michael Torres", role: "Educational Channel", text: "Professional, responsive, and insanely talented. Best investment for my channel.", rating: 5, avatar_url: null },
 ];
 
 export function Testimonials() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [items, setItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchItems() {
+      const { data, error } = await supabase
+        .from('testimonials')
+        .select('id, client_name, client_role, avatar_url, quote, rating, published, sort_order')
+        .order('sort_order', { ascending: true })
+      
+      console.log('testimonials data:', data)
+      console.log('testimonials error:', error)
+      if (error) {
+        console.error('Fetch frontpage testimonials error details:', error.message, error.details);
+      }
+      if (data && data.length > 0) {
+        setItems(data);
+      } else {
+        setItems(fallbackTestimonials);
+      }
+    }
+    fetchItems();
+  }, []);
 
   const scrollNext = () => {
     if (scrollContainerRef.current) {
@@ -49,23 +72,23 @@ export function Testimonials() {
           className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 px-[10%] md:px-[calc(50vw-436px)] md:scroll-pl-[calc(50vw-436px)]"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {testimonials.map((t, i) => (
+          {items.map((t, i) => (
             <div key={i} className="w-[85vw] md:w-[424px] shrink-0 snap-center md:snap-start bg-white rounded-[16px] p-8 md:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col justify-between min-h-[340px]">
-               <p className="text-[16px] md:text-[18px] text-[#0A0A0A] leading-[1.6]">"{t.text}"</p>
+               <p className="text-[16px] md:text-[18px] text-[#0A0A0A] leading-[1.6]">"{t.quote || t.text}"</p>
                <div className="mt-8 flex justify-between items-end">
                   <div className="flex items-center gap-4">
                      <div className="w-10 h-10 bg-gray-200 rounded-full overflow-hidden shrink-0">
-                        <img src={`https://i.pravatar.cc/150?u=${t.name.replace(/\s+/g, '')}`} alt={t.name} className="w-full h-full object-cover" />
+                        <img src={t.avatar_url || `https://i.pravatar.cc/150?u=${(t.client_name || t.name).replace(/\s+/g, '')}`} alt={t.client_name || t.name} className="w-full h-full object-cover" />
                      </div>
                      <div className="flex items-center gap-2">
                         <span className="text-[14px] text-[#0A0A0A] font-medium flex items-center gap-1">
-                           <span className="text-xs">☆</span> {t.name}
+                           <span className="text-xs">☆</span> {t.client_name || t.name}
                         </span>
-                        <span className="text-[13px] text-[#777777]">— {t.role}</span>
+                        <span className="text-[13px] text-[#777777]">— {t.client_role || t.role}</span>
                      </div>
                   </div>
                   <div className="flex gap-1 text-[#FF4D00]">
-                     {[...Array(5)].map((_, j) => <Star key={j} size={16} fill="currentColor" stroke="none" />)}
+                     {[...Array(t.rating || 5)].map((_, j) => <Star key={j} size={16} fill="currentColor" stroke="none" />)}
                   </div>
                </div>
             </div>

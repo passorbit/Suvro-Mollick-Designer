@@ -2,6 +2,9 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { PortfolioGallery } from './components/PortfolioGallery';
@@ -10,7 +13,11 @@ import { Testimonials } from './components/Testimonials';
 import { FAQ } from './components/FAQ';
 import { Footer } from './components/Footer';
 
-export default function App() {
+// Admin Pages
+import { AdminLogin } from './admin/Login';
+import { AdminDashboard } from './admin/Dashboard';
+
+function MainSite() {
   return (
     <div className="min-h-screen bg-transparent text-text-main selection:bg-accent selection:text-white flex flex-col overflow-x-hidden">
       <Navbar />
@@ -25,3 +32,18 @@ export default function App() {
     </div>
   );
 }
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainSite />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/*" element={<AdminDashboard />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+      <Toaster position="bottom-right" />
+    </BrowserRouter>
+  );
+}
+

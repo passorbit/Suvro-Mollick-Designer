@@ -1,6 +1,9 @@
 import { motion } from 'motion/react';
+import { useSiteSettings } from '../lib/supabase';
 
 export function Hero() {
+  const settings = useSiteSettings();
+
   return (
     <section className="pt-32 pb-16 flex flex-col items-center justify-center px-6 md:px-12 max-w-7xl mx-auto relative overflow-hidden text-center">
       <div className="max-w-[560px] flex flex-col items-center">
@@ -19,8 +22,16 @@ export function Hero() {
           transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
           className="text-[40px] md:text-[64px] !font-medium font-heading leading-[1.1] mb-6 text-[#0A0A0A]"
         >
-          <span className="block whitespace-nowrap"><span className="text-accent">Visuals</span> that speak</span>
-          <span className="block whitespace-nowrap">Before words <span className="text-accent">do.</span></span>
+          {settings.hero_headline ? (
+            settings.hero_headline.split('\n').map((line, i) => (
+              <span key={i} className="block whitespace-nowrap">{line}</span>
+            ))
+          ) : (
+            <>
+              <span className="block whitespace-nowrap"><span className="text-accent">Visuals</span> that speak</span>
+              <span className="block whitespace-nowrap">Before words <span className="text-accent">do.</span></span>
+            </>
+          )}
         </motion.h1>
 
         <motion.p
@@ -29,7 +40,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-[16px] text-[#777777] max-w-[600px] mb-8 mx-auto leading-relaxed"
         >
-          Thumbnail Artist & Strategist helping creators grow through powerful visuals.
+          {settings.hero_subheadline || "Thumbnail Artist & Strategist helping creators grow through powerful visuals."}
         </motion.p>
 
         <motion.div
@@ -49,7 +60,7 @@ export function Hero() {
             </svg>
           </motion.div>
           <a
-            href="#contact"
+            href={settings.hire_me_link || "#contact"}
             className="px-8 py-3.5 bg-accent text-white font-normal rounded-full hover:bg-accent/90 transition-colors"
           >
             Book a Project

@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useSiteSettings } from '../lib/supabase';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const settings = useSiteSettings();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +22,12 @@ export function Navbar() {
     { name: 'FAQ', href: '#faq' },
   ];
 
+  const logoContent = settings.logo_url ? (
+    <img src={settings.logo_url} alt={settings.site_name || "Logo"} className="h-8 w-auto object-contain" />
+  ) : (
+    settings.site_name || "Suvro Mollick"
+  );
+
   return (
     <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[1000] w-[calc(100%-32px)] md:w-full max-w-[700px] flex flex-col items-center">
       <nav
@@ -28,7 +36,7 @@ export function Navbar() {
         }`}
       >
         <a href="#" className="text-lg font-bold font-heading text-[#0A0A0A]">
-          Suvro Mollick
+          {logoContent}
         </a>
 
         {/* Desktop Nav */}
@@ -48,7 +56,7 @@ export function Navbar() {
 
         <div className="hidden md:block">
           <a
-            href="#contact"
+            href={settings.hire_me_link || "#contact"}
             className="px-5 py-2 bg-accent text-white font-medium text-[14px] rounded-[50px] hover:bg-accent/90 transition-colors inline-block"
           >
             Hire Me
@@ -87,7 +95,7 @@ export function Navbar() {
                 </a>
               ))}
               <a
-                href="#contact"
+                href={settings.hire_me_link || "#contact"}
                 onClick={() => setIsOpen(false)}
                 className="mt-[16px] w-full py-[12px] bg-accent text-white gap-2 flex items-center justify-center font-bold text-[16px] rounded-[50px] shadow-sm uppercase tracking-wide"
               >

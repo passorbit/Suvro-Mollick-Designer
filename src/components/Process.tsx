@@ -1,33 +1,47 @@
 import { motion } from 'motion/react';
+import { useEffect, useState } from 'react';
+import { supabase, ProcessStep } from '../lib/supabase';
 
-const steps = [
+const fallbackSteps = [
   {
-    num: "1",
-    tag: "STEP 01",
+    step_number: 1,
     title: "Brief",
-    desc: "You share your video idea, references, and channel link."
+    description: "You share your video idea, references, and channel link."
   },
   {
-    num: "2",
-    tag: "STEP 02",
+    step_number: 2,
     title: "Concept",
-    desc: "I create 1-2 initial thumbnail concepts within 12 hours."
+    description: "I create 1-2 initial thumbnail concepts within 12 hours."
   },
   {
-    num: "3",
-    tag: "STEP 03",
+    step_number: 3,
     title: "Revisions",
-    desc: "We refine together until it's perfect and click-worthy."
+    description: "We refine together until it's perfect and click-worthy."
   },
   {
-    num: "4",
-    tag: "STEP 04",
+    step_number: 4,
     title: "Delivery",
-    desc: "Final PNG + PSD files delivered in 24-48 hours."
+    description: "Final PNG + PSD files delivered in 24-48 hours."
   }
 ];
 
 export function Process() {
+  const [steps, setSteps] = useState<any[]>(fallbackSteps);
+
+  useEffect(() => {
+    async function fetchSteps() {
+      const { data, error } = await supabase
+        .from('process_steps')
+        .select('*')
+        .order('sort_order', { ascending: true });
+      
+      if (data && data.length > 0) {
+        setSteps(data);
+      }
+    }
+    fetchSteps();
+  }, []);
+
   return (
     <section className="py-24 px-6 md:px-12 max-w-[800px] mx-auto bg-transparent">
       <div className="text-center mb-16">
@@ -70,7 +84,7 @@ export function Process() {
                 transition={{ delay: index * 0.15, duration: 0.4 }}
                 className="relative z-10 flex-shrink-0 w-[56px] h-[56px] rounded-full border-2 border-accent bg-white flex items-center justify-center shadow-sm"
               >
-                <span className="text-accent font-bold text-[20px] font-heading">{step.num}</span>
+                <span className="text-accent font-bold text-[20px] font-heading">{step.step_number}</span>
               </motion.div>
 
               <motion.div 
@@ -81,13 +95,13 @@ export function Process() {
                 className="flex-1 bg-[#FFFFFF] border border-[rgba(0,0,0,0.08)] shadow-[0_2px_12px_rgba(0,0,0,0.06)] rounded-[16px] p-[32px]"
               >
                 <div className="text-accent text-[12px] font-bold tracking-[0.15em] uppercase mb-2">
-                  {step.tag}
+                  STEP {step.step_number < 10 ? `0${step.step_number}` : step.step_number}
                 </div>
                 <h3 className="text-[28px] font-medium font-heading text-[#0A0A0A] mb-2 leading-tight">
                   {step.title}
                 </h3>
                 <p className="text-[16px] text-[#555555] leading-[1.6]">
-                  {step.desc}
+                  {step.description}
                 </p>
               </motion.div>
             </div>
