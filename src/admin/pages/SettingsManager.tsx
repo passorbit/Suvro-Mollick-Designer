@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 const SETTING_KEYS = [
   'site_name',
   'logo_url',
+  'favicon_url',
   'hero_headline',
   'hero_subheadline',
   'instagram_url',
@@ -93,6 +94,15 @@ export function SettingsManager() {
                 type="text"
                 value={settings.logo_url || ''}
                 onChange={(e) => handleChange('logo_url', e.target.value)}
+                className="w-full bg-[#0A0A0A] border border-white/10 rounded-lg px-4 py-2 focus:border-white/30 text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-400 mb-1">Favicon URL</label>
+              <input
+                type="text"
+                value={settings.favicon_url || ''}
+                onChange={(e) => handleChange('favicon_url', e.target.value)}
                 className="w-full bg-[#0A0A0A] border border-white/10 rounded-lg px-4 py-2 focus:border-white/30 text-white"
               />
             </div>

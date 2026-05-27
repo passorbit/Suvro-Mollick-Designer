@@ -102,6 +102,17 @@ export function useSiteSettings() {
           map[s.key] = s.value || '';
         });
         setSettings(map);
+
+        if (map.site_name) {
+          document.title = map.site_name;
+        }
+
+        if (map.favicon_url) {
+          const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement || document.createElement('link');
+          link.rel = 'icon';
+          link.href = map.favicon_url;
+          document.head.appendChild(link);
+        }
       }
     }
     fetchSettings();

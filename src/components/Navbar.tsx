@@ -23,9 +23,9 @@ export function Navbar() {
   ];
 
   const logoContent = settings.logo_url ? (
-    <img src={settings.logo_url} alt={settings.site_name || "Logo"} className="h-8 w-auto object-contain" />
+    <img src={settings.logo_url} alt={settings.site_name?.trim() || "Logo"} className="h-8 w-auto object-contain" />
   ) : (
-    settings.site_name || "Suvro Mollick"
+    settings.site_name?.trim() || "Suvro Mollick"
   );
 
   return (
