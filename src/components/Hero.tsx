@@ -50,20 +50,20 @@ export function Hero() {
           className="relative inline-flex items-center justify-center mt-2"
         >
           <div
-            className="absolute -left-12 md:-left-16 top-0 text-red-500"
+            className="absolute -left-16 md:-left-20 -top-2 text-red-500 pointer-events-none"
           >
-            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(-5deg)' }}>
+            <svg width="70" height="70" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(-15deg)' }}>
               <motion.path 
-                d="M3 15C8 8 15 8 20 12"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: [0, 1, 1, 1], opacity: [0, 1, 1, 0] }}
-                transition={{ duration: 2.5, ease: "easeInOut", repeat: Infinity, times: [0, 0.35, 0.8, 1] }}
+                d="M10,80 Q30,20 85,45"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse", repeatDelay: 0.5 }}
               />
               <motion.path 
-                d="M15 6l5 6-3 6"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: [0, 0, 1, 1, 1], opacity: [0, 0, 1, 1, 0] }}
-                transition={{ duration: 2.5, ease: "easeInOut", repeat: Infinity, times: [0, 0.25, 0.5, 0.8, 1] }}
+                d="M65,25 L85,45 L60,55"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse", repeatDelay: 0.5 }}
               />
             </svg>
           </div>
