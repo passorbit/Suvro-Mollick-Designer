@@ -43,7 +43,20 @@ export function PortfolioGallery() {
             className="relative w-[380px] h-[220px] shrink-0 rounded-[12px] overflow-hidden group bg-[#FFFFFF] flex items-center justify-center border-[3px] border-[rgba(255,255,255,0.9)] shadow-[0px_4px_5px_0px_rgba(0,0,0,0.2)]"
           >
             {item.image_url ? (
-              <img src={item.image_url} alt={item.title || ''} className="w-full h-full object-cover" />
+              <>
+                <img 
+                  src={item.image_url} 
+                  alt={item.title || ''} 
+                  className="w-full h-full object-cover"
+                  onContextMenu={(e) => e.preventDefault()}
+                  onDragStart={(e) => e.preventDefault()}
+                  style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
+                />
+                <div 
+                  className="absolute top-0 left-0 w-full h-full bg-transparent z-[2]" 
+                  onContextMenu={(e) => e.preventDefault()} 
+                />
+              </>
             ) : (
               <span className="text-black/10 font-bold text-xl rotate-12 transform origin-center select-none">Placeholder</span>
             )}

@@ -49,16 +49,24 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="relative inline-flex items-center justify-center mt-2"
         >
-          <motion.div
-            animate={{ x: [-4, 4, -4] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="absolute -left-12 md:-left-16 text-accent"
+          <div
+            className="absolute -left-12 md:-left-16 top-0 text-red-500"
           >
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(-5deg)' }}>
-              <path d="M4 12c4-4 8-4 14 0" />
-              <path d="M14 8l4 4-4 4" />
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(-5deg)' }}>
+              <motion.path 
+                d="M3 15C8 8 15 8 20 12"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: [0, 1, 1, 1], opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 2.5, ease: "easeInOut", repeat: Infinity, times: [0, 0.35, 0.8, 1] }}
+              />
+              <motion.path 
+                d="M15 6l5 6-3 6"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: [0, 0, 1, 1, 1], opacity: [0, 0, 1, 1, 0] }}
+                transition={{ duration: 2.5, ease: "easeInOut", repeat: Infinity, times: [0, 0.25, 0.5, 0.8, 1] }}
+              />
             </svg>
-          </motion.div>
+          </div>
           <a
             href={settings.hire_me_link || "#contact"}
             className="px-8 py-3.5 bg-accent text-white font-normal rounded-full hover:bg-accent/90 transition-colors"

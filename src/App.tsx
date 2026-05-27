@@ -33,7 +33,30 @@ function MainSite() {
   );
 }
 
+import { useEffect } from 'react';
+import { supabase } from './lib/supabase';
+
 export default function App() {
+  useEffect(() => {
+    const fetchFavicon = async () => {
+      const { data } = await supabase
+        .from('site_settings')
+        .select('value')
+        .eq('key', 'favicon_url')
+        .single()
+      if (data?.value) {
+        let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement
+        if (!link) {
+          link = document.createElement('link')
+          link.rel = 'icon'
+          document.head.appendChild(link)
+        }
+        link.href = data.value
+      }
+    }
+    fetchFavicon()
+  }, [])
+
   return (
     <BrowserRouter>
       <Routes>

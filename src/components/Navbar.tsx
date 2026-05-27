@@ -1,12 +1,25 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useSiteSettings } from '../lib/supabase';
+import { supabase, useSiteSettings } from '../lib/supabase';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [siteName, setSiteName] = useState('Suvro Mollick');
   const settings = useSiteSettings();
+
+  useEffect(() => {
+    const fetchSiteName = async () => {
+      const { data } = await supabase
+        .from('site_settings')
+        .select('value')
+        .eq('key', 'site_name')
+        .single()
+      if (data?.value) setSiteName(data.value)
+    }
+    fetchSiteName()
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,9 +36,9 @@ export function Navbar() {
   ];
 
   const logoContent = settings.logo_url ? (
-    <img src={settings.logo_url} alt={settings.site_name?.trim() || "Logo"} className="h-8 w-auto object-contain" />
+    <img src={settings.logo_url} alt={siteName.trim()} className="h-8 w-auto object-contain" />
   ) : (
-    settings.site_name?.trim() || "Suvro Mollick"
+    siteName.trim()
   );
 
   return (

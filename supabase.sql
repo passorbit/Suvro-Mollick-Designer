@@ -35,3 +35,11 @@ CREATE TABLE IF NOT EXISTS process_steps (
   sort_order int DEFAULT 0
 );
 
+INSERT INTO site_settings (key, value) 
+VALUES ('site_name', 'Suvro Mollick')
+ON CONFLICT (key) DO NOTHING;
+
+INSERT INTO site_settings (key, value) 
+VALUES ('favicon_url', '')
+ON CONFLICT (key) DO NOTHING;
+
