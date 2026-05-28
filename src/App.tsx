@@ -4,6 +4,8 @@
  */
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { useEffect, useState } from 'react';
+import { supabase } from './lib/supabase';
 
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -33,10 +35,19 @@ function MainSite() {
   );
 }
 
-import { useEffect } from 'react';
-import { supabase } from './lib/supabase';
-
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFading, setIsFading] = useState(false);
+
+  useEffect(() => {
+    const fadeTimer = setTimeout(() => setIsFading(true), 1200);
+    const removeTimer = setTimeout(() => setIsLoading(false), 1600);
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(removeTimer);
+    };
+  }, []);
+
   useEffect(() => {
     const fetchFavicon = async () => {
       const { data } = await supabase
@@ -58,15 +69,51 @@ export default function App() {
   }, [])
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainSite />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/*" element={<AdminDashboard />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-      <Toaster position="bottom-right" />
-    </BrowserRouter>
+    <>
+      {isLoading && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: '#F2F2F2',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 9999,
+            opacity: isFading ? 0 : 1,
+            transition: 'opacity 400ms ease-in-out',
+            pointerEvents: isFading ? 'none' : 'auto',
+          }}
+        >
+          <style>
+            {`
+              @keyframes inline-spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `}
+          </style>
+          <div
+            style={{
+              width: '36px',
+              height: '36px',
+              border: '3px solid #FF4D00',
+              borderTopColor: 'transparent',
+              borderRadius: '50%',
+              animation: 'inline-spin 1s linear infinite',
+            }}
+          />
+        </div>
+      )}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainSite />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/*" element={<AdminDashboard />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        <Toaster position="bottom-right" />
+      </BrowserRouter>
+    </>
   );
 }
-
