@@ -36,17 +36,6 @@ function MainSite() {
 }
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isFading, setIsFading] = useState(false);
-
-  useEffect(() => {
-    const fadeTimer = setTimeout(() => setIsFading(true), 300);
-    const removeTimer = setTimeout(() => setIsLoading(false), 500);
-    return () => {
-      clearTimeout(fadeTimer);
-      clearTimeout(removeTimer);
-    };
-  }, []);
 
   useEffect(() => {
     const fetchFavicon = async () => {
@@ -70,40 +59,6 @@ export default function App() {
 
   return (
     <>
-      {isLoading && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: '#F2F2F2',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 9999,
-            opacity: isFading ? 0 : 1,
-            transition: 'opacity 400ms ease-in-out',
-            pointerEvents: isFading ? 'none' : 'auto',
-          }}
-        >
-          <style>
-            {`
-              @keyframes inline-spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-              }
-            `}
-          </style>
-          <div
-            style={{
-              width: '36px',
-              height: '36px',
-              border: '3px solid #FF4D00',
-              borderTopColor: 'transparent',
-              borderRadius: '50%',
-              animation: 'inline-spin 1s linear infinite',
-            }}
-          />
-        </div>
       )}
       <BrowserRouter>
         <Routes>
