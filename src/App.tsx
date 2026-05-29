@@ -40,8 +40,8 @@ export default function App() {
   const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
-    const fadeTimer = setTimeout(() => setIsFading(true), 1200);
-    const removeTimer = setTimeout(() => setIsLoading(false), 1600);
+    const fadeTimer = setTimeout(() => setIsFading(true), 300);
+    const removeTimer = setTimeout(() => setIsLoading(false), 500);
     return () => {
       clearTimeout(fadeTimer);
       clearTimeout(removeTimer);
