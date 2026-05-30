@@ -6,7 +6,7 @@ import { supabase, useSiteSettings } from '../lib/supabase';
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [siteName, setSiteName] = useState('Suvro Mollick');
+  const [siteName, setSiteName] = useState('');
   const settings = useSiteSettings();
 
   useEffect(() => {
