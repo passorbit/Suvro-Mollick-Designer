@@ -26,6 +26,15 @@ export function PortfolioGallery() {
     fetchItems();
   }, []);
 
+  // 🛠️ সমাধান: ডেটা ফেচ হওয়ার সময় সাদা Placeholder দেখানোর বদলে সেকশনটি ফাঁকা থাকবে
+  if (loading) {
+    return (
+      <section id="work" className="pb-24 overflow-hidden min-h-[700px]">
+        {/* ফাঁকা স্পেস: লেআউট জাম্প করবে না এবং কোনো সাদা বক্সও আসবে না */}
+      </section>
+    );
+  }
+
   const row1Items = items.filter(i => i.row_number === 1);
   const row2Items = items.filter(i => i.row_number === 2);
   const row3Items = items.filter(i => i.row_number === 3);
