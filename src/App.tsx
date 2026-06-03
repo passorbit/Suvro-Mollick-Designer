@@ -10,6 +10,7 @@ import { supabase } from './lib/supabase';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { PortfolioGallery } from './components/PortfolioGallery';
+import { Transformations } from './components/Transformations';
 import { Process } from './components/Process';
 import { Testimonials } from './components/Testimonials';
 import { FAQ } from './components/FAQ';
@@ -26,6 +27,7 @@ function MainSite() {
       <main className="flex-1">
         <Hero />
         <PortfolioGallery />
+        <Transformations />
         <Process />
         <Testimonials />
         <FAQ />
