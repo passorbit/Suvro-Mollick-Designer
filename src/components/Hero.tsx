@@ -5,8 +5,8 @@ export function Hero() {
   const settings = useSiteSettings();
 
   return (
-    <section className="pt-32 pb-16 flex flex-col items-center justify-center px-6 md:px-12 max-w-7xl mx-auto relative overflow-hidden text-center">
-      <div className="max-w-[560px] flex flex-col items-center">
+    <section className="pt-32 pb-16 flex flex-col items-center justify-center px-4 sm:px-6 md:px-12 max-w-7xl mx-auto relative overflow-hidden text-center">
+      <div className="max-w-[560px] flex flex-col items-center w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -20,16 +20,16 @@ export function Hero() {
           initial={{ opacity: 0, filter: 'blur(8px)' }}
           animate={{ opacity: 1, filter: 'blur(0px)' }}
           transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
-          className="text-[40px] md:text-[64px] !font-medium font-heading leading-[1.1] mb-6 text-[#0A0A0A]"
+          className="text-4xl sm:text-[40px] md:text-[64px] !font-medium font-heading leading-[1.2] mb-6 text-[#0A0A0A] w-full"
         >
           {settings.hero_headline ? (
             settings.hero_headline.split('\n').map((line, i) => (
-              <span key={i} className="block whitespace-nowrap">{line}</span>
+              <span key={i} className="block break-words">{line}</span>
             ))
           ) : (
             <>
-              <span className="block whitespace-nowrap"><span className="text-accent">Visuals</span> that speak</span>
-              <span className="block whitespace-nowrap">Before words <span className="text-accent">do.</span></span>
+              <span className="block break-words"><span className="text-accent">Visuals</span> that speak</span>
+              <span className="block break-words">Before words <span className="text-accent">do.</span></span>
             </>
           )}
         </motion.h1>
@@ -38,7 +38,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-[16px] text-[#777777] max-w-[600px] mb-8 mx-auto leading-relaxed"
+          className="text-[15px] sm:text-[16px] text-[#777777] max-w-[600px] mb-8 mx-auto leading-relaxed px-2"
         >
           {settings.hero_subheadline || "Thumbnail Artist & Strategist helping creators grow through powerful visuals."}
         </motion.p>
@@ -50,7 +50,7 @@ export function Hero() {
           className="relative inline-flex items-center justify-center mt-2"
         >
           <div
-            className="absolute -left-16 md:-left-24 -top-4 text-red-500 pointer-events-none"
+            className="absolute -left-12 sm:-left-16 md:-left-24 -top-4 text-red-500 pointer-events-none"
           >
             <svg width="80" height="80" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(-10deg)' }}>
               <motion.path 
