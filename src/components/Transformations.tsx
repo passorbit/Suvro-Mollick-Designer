@@ -68,7 +68,6 @@ export function Transformations() {
 
   useEffect(() => {
     async function fetchTransformations() {
-      // ডাটাবেস থেকে ছবিগুলো টেনে আনা হচ্ছে
       const { data } = await supabase
         .from('transformations')
         .select('*')
@@ -79,25 +78,15 @@ export function Transformations() {
     fetchTransformations();
   }, []);
 
-  // যদি কোনো ছবি আপলোড করা না থাকে, তবে এই সেকশনটি লুকানো থাকবে
   if (items.length === 0) return null;
 
   return (
     <section className="py-24 bg-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
         
-        {/* সেকশন হেডিং */}
-        <div className="text-center mb-16 flex flex-col items-center">
-          <span className="text-accent font-bold text-sm tracking-widest uppercase mb-3">The Magic</span>
-          <h2 className="text-3xl sm:text-4xl md:text-[50px] font-bold font-heading text-[#0A0A0A] leading-tight">
-            See the Transformation
-          </h2>
-          <p className="text-[#777777] mt-4 max-w-2xl mx-auto">
-            Drag the slider to see how a raw image turns into a high-performing, clickable thumbnail.
-          </p>
-        </div>
+        {/* হেডিংয়ের কোডটুকু এখান থেকে মুছে ফেলা হয়েছে */}
 
-        {/* গ্রিড লেআউট (পিসিতে ২টা পাশাপাশি, মোবাইলে ১টা) */}
+        {/* সরাসরি স্লাইডারের গ্রিড */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           {items.map(item => (
             <BeforeAfterCard key={item.id} item={item} />
