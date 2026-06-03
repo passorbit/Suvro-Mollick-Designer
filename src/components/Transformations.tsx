@@ -11,29 +11,28 @@ interface Transformation {
 
 // স্লাইডারের মূল লজিক ও ডিজাইন
 function BeforeAfterCard({ item }: { item: Transformation }) {
-  const [sliderPosition, setSliderPosition] = useState(50); // শুরুতে স্লাইডার মাঝখানে (50%) থাকবে
+  const [sliderPosition, setSliderPosition] = useState(50); 
 
   return (
     <div className="relative w-full aspect-video rounded-[16px] overflow-hidden group shadow-[0_8px_30px_rgb(0,0,0,0.08)] bg-gray-100 border-4 border-white">
       
-      {/* Before Image (পেছনের ছবি) */}
+      {/* 🛠️ সমাধান: After Image এখন পেছনে থাকবে (ডানদিকে শো করবে) */}
       <img
-        src={item.before_image_url}
-        alt={`${item.title} Before`}
+        src={item.after_image_url}
+        alt={`${item.title} After`}
         className="absolute top-0 left-0 w-full h-full object-cover"
         onDragStart={(e) => e.preventDefault()}
       />
 
-      {/* After Image (সামনের ছবি - ক্লিপিং মাস্ক করা) */}
+      {/* 🛠️ সমাধান: Before Image এখন সামনে থাকবে এবং মাস্ক করা থাকবে (বামদিকে শো করবে) */}
       <img
-        src={item.after_image_url}
-        alt={`${item.title} After`}
+        src={item.before_image_url}
+        alt={`${item.title} Before`}
         className="absolute top-0 left-0 w-full h-full object-cover"
         style={{ clipPath: `polygon(0 0, ${sliderPosition}% 0, ${sliderPosition}% 100%, 0 100%)` }}
         onDragStart={(e) => e.preventDefault()}
       />
 
-      {/* স্লাইডারের মাঝখানের সাদা দাগ ও আইকন */}
       <div
         className="absolute top-0 bottom-0 w-1 bg-white pointer-events-none"
         style={{ left: `calc(${sliderPosition}% - 2px)` }}
@@ -45,7 +44,6 @@ function BeforeAfterCard({ item }: { item: Transformation }) {
         </div>
       </div>
 
-      {/* ইউজারের মাউস/টাচ কন্ট্রোল করার অদৃশ্য ইনপুট */}
       <input
         type="range"
         min="0"
@@ -55,7 +53,6 @@ function BeforeAfterCard({ item }: { item: Transformation }) {
         className="absolute top-0 left-0 w-full h-full opacity-0 cursor-ew-resize z-10"
       />
 
-      {/* Before / After টেক্সট লেবেল (মাউস নিলে ভাসবে) */}
       <div className="absolute bottom-4 left-4 bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-md backdrop-blur-sm pointer-events-none transition-opacity opacity-0 group-hover:opacity-100">
         Before
       </div>
