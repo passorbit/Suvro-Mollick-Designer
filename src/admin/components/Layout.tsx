@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { LayoutDashboard, Users, Settings, LogOut, Image, ListOrdered } from 'lucide-react';
+import { LayoutDashboard, Users, Settings, LogOut, Image, ListOrdered, Wand2 } from 'lucide-react'; // <-- Wand2 আইকনটি যুক্ত করা হয়েছে
 import toast from 'react-hot-toast';
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -13,6 +13,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { name: 'Portfolio', path: '/admin/portfolio', icon: <Image size={20} /> },
+    // 🛠️ নতুন Transformations মেন্যুটি এখানে যুক্ত করা হলো:
+    { name: 'Transformations', path: '/admin/transformations', icon: <Wand2 size={20} /> },
     { name: 'Process', path: '/admin/process', icon: <ListOrdered size={20} /> },
     { name: 'Testimonials', path: '/admin/testimonials', icon: <Users size={20} /> },
     { name: 'Site Settings', path: '/admin/settings', icon: <Settings size={20} /> },
