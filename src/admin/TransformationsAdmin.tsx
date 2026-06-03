@@ -19,7 +19,6 @@ export function TransformationsAdmin() {
     const toastId = toast.loading('ছবি আপলোড হচ্ছে...');
 
     try {
-      // ১. Before Image আপলোড
       const beforeExt = beforeImage.name.split('.').pop();
       const beforeFileName = `${Date.now()}_before.${beforeExt}`;
       const { error: beforeError } = await supabase.storage
@@ -27,7 +26,6 @@ export function TransformationsAdmin() {
         .upload(beforeFileName, beforeImage);
       if (beforeError) throw beforeError;
 
-      // ২. After Image আপলোড
       const afterExt = afterImage.name.split('.').pop();
       const afterFileName = `${Date.now()}_after.${afterExt}`;
       const { error: afterError } = await supabase.storage
@@ -35,11 +33,9 @@ export function TransformationsAdmin() {
         .upload(afterFileName, afterImage);
       if (afterError) throw afterError;
 
-      // ৩. পাবলিক URL জেনারেট করা
       const beforeUrl = supabase.storage.from('transformations').getPublicUrl(beforeFileName).data.publicUrl;
       const afterUrl = supabase.storage.from('transformations').getPublicUrl(afterFileName).data.publicUrl;
 
-      // ৪. ডাটাবেসে সেভ করা
       const { error: dbError } = await supabase
         .from('transformations')
         .insert([{ 
@@ -52,7 +48,6 @@ export function TransformationsAdmin() {
 
       toast.success('সফলভাবে আপলোড হয়েছে!', { id: toastId });
       
-      // ফর্ম রিসেট
       setTitle('');
       setBeforeImage(null);
       setAfterImage(null);
@@ -65,7 +60,7 @@ export function TransformationsAdmin() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-sm border border-gray-100 mt-10">
+    <div className="max-w-2xl mx-auto p-8 bg-white rounded-xl shadow-sm border border-gray-100 mt-10">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Add New Transformation</h2>
       
       <form onSubmit={handleUpload} className="space-y-6">
@@ -75,29 +70,31 @@ export function TransformationsAdmin() {
             type="text" 
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-accent focus:border-accent outline-none"
+            // 🛠️ সমাধান: text-black যোগ করা হয়েছে
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-accent focus:border-accent outline-none text-black bg-white"
             placeholder="Enter thumbnail title..."
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center">
+          <div className="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center bg-gray-50">
             <label className="block text-sm font-bold text-gray-700 mb-2">📸 Before Image (Raw)</label>
             <input 
               type="file" 
               accept="image/*"
               onChange={(e) => setBeforeImage(e.target.files?.[0] || null)}
-              className="text-sm w-full"
+              // 🛠️ সমাধান: text-black এবং সুন্দর ডিজাইনের জন্য Tailwind File Button ক্লাসেস
+              className="text-sm w-full text-black cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-accent/10 file:text-accent hover:file:bg-accent/20"
             />
           </div>
 
-          <div className="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center">
+          <div className="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center bg-gray-50">
             <label className="block text-sm font-bold text-gray-700 mb-2">✨ After Image (Final)</label>
             <input 
               type="file" 
               accept="image/*"
               onChange={(e) => setAfterImage(e.target.files?.[0] || null)}
-              className="text-sm w-full"
+              className="text-sm w-full text-black cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-accent/10 file:text-accent hover:file:bg-accent/20"
             />
           </div>
         </div>
@@ -105,7 +102,7 @@ export function TransformationsAdmin() {
         <button 
           type="submit" 
           disabled={uploading}
-          className="w-full py-3 bg-accent text-white font-bold rounded-lg hover:bg-accent/90 disabled:opacity-50 transition-all"
+          className="w-full py-3 bg-accent text-white font-bold rounded-lg hover:bg-accent/90 disabled:opacity-50 transition-all cursor-pointer mt-4"
         >
           {uploading ? 'Uploading Data...' : 'Upload Transformation'}
         </button>
