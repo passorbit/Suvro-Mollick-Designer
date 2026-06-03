@@ -15,11 +15,11 @@ export function Navbar() {
         .from('site_settings')
         .select('value')
         .eq('key', 'site_name')
-        .single()
-      if (data?.value) setSiteName(data.value)
-    }
-    fetchSiteName()
-  }, [])
+        .single();
+      if (data?.value) setSiteName(data.value);
+    };
+    fetchSiteName();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,6 +34,26 @@ export function Navbar() {
     { name: 'Testimonials', href: '#testimonials' },
     { name: 'FAQ', href: '#faq' },
   ];
+
+  // 🛠️ সমাধান: মোবাইলের জন্য কাস্টম স্ক্রল হ্যান্ডলার
+  const handleMobileClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault(); // ব্রাউজারের ডিফল্ট জাম্প বন্ধ করা হলো
+    setIsOpen(false); // আগে মেন্যু বন্ধ হবে
+
+    // মেন্যু বন্ধ হওয়ার অ্যানিমেশন শুরু হওয়ার জন্য সামান্য সময় (150ms) দিয়ে তারপর স্ক্রল করানো হবে
+    setTimeout(() => {
+      if (href.startsWith('#')) {
+        const element = document.querySelector(href);
+        if (element) {
+          // হেডার ফিক্সড থাকার কারণে কিছুটা উপর থেকে স্ক্রল করা হচ্ছে
+          const y = element.getBoundingClientRect().top + window.scrollY - 100;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      } else {
+        window.location.href = href;
+      }
+    }, 150); 
+  };
 
   const logoContent = settings.logo_url ? (
     <img src={settings.logo_url} alt={siteName.trim()} className="h-8 w-auto object-contain" />
@@ -101,7 +121,7 @@ export function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => handleMobileClick(e, link.href)}
                   className="text-[16px] py-[12px] border-b border-[rgba(0,0,0,0.06)] text-text-main hover:text-accent transition-colors"
                 >
                   {link.name}
@@ -109,7 +129,7 @@ export function Navbar() {
               ))}
               <a
                 href={settings.hire_me_link || "#contact"}
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => handleMobileClick(e, settings.hire_me_link || "#contact")}
                 className="mt-[16px] w-full py-[12px] bg-accent text-white gap-2 flex items-center justify-center font-bold text-[16px] rounded-[50px] shadow-sm uppercase tracking-wide"
               >
                 Hire Me
