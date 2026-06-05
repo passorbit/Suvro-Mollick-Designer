@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 
 import { PortfolioManager } from './pages/PortfolioManager';
 import { TransformationsAdmin } from './TransformationsAdmin';
+import { TransformationsAdmin } from './AboutAdmin';
 import { TestimonialsManager } from './pages/TestimonialsManager';
 import { SettingsManager } from './pages/SettingsManager';
 import { ProcessManager } from './pages/ProcessManager';
@@ -50,7 +51,8 @@ export function AdminDashboard() {
         <Route path="/" element={<Navigate to="portfolio" replace />} />
         <Route path="dashboard" element={<Navigate to="portfolio" replace />} />
         <Route path="portfolio" element={<PortfolioManager />} />
-        <Route path="transformations" element={<TransformationsAdmin />} /> {/* স্লাশ (/) সরিয়ে দেওয়া হয়েছে */}
+        <Route path="transformations" element={<TransformationsAdmin />} />
+        <Route path="transformations" element={<AboutAdmin />} />
         <Route path="process" element={<ProcessManager />} />
         <Route path="testimonials" element={<TestimonialsManager />} />
         <Route path="settings" element={<SettingsManager />} />
