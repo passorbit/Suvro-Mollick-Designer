@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase';
 
 import { PortfolioManager } from './pages/PortfolioManager';
 import { TransformationsAdmin } from './TransformationsAdmin';
-import { TransformationsAdmin } from './AboutAdmin';
+import { AboutAdmin } from './AboutAdmin';
 import { TestimonialsManager } from './pages/TestimonialsManager';
 import { SettingsManager } from './pages/SettingsManager';
 import { ProcessManager } from './pages/ProcessManager';
