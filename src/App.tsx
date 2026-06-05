@@ -11,6 +11,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { PortfolioGallery } from './components/PortfolioGallery';
 import { Transformations } from './components/Transformations';
+import { About } from './components/About';
 import { Process } from './components/Process';
 import { Testimonials } from './components/Testimonials';
 import { FAQ } from './components/FAQ';
@@ -28,6 +29,7 @@ function MainSite() {
         <Hero />
         <PortfolioGallery />
         <Transformations />
+        <About />
         <Process />
         <Testimonials />
         <FAQ />
