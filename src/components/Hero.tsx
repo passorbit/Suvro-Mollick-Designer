@@ -5,7 +5,6 @@ export function Hero() {
   const settings = useSiteSettings();
 
   return (
-    // 🛠️ পরিবর্তন ১: pb-16 কমিয়ে pb-4 করা হয়েছে যাতে নিচের ক্যারোসেল উপরে উঠে আসে
     <section className="pt-32 pb-4 flex flex-col items-center justify-center px-4 sm:px-6 md:px-12 max-w-7xl mx-auto relative overflow-hidden text-center">
       <div className="max-w-[560px] flex flex-col items-center w-full">
         <motion.div
@@ -21,7 +20,6 @@ export function Hero() {
           initial={{ opacity: 0, filter: 'blur(8px)' }}
           animate={{ opacity: 1, filter: 'blur(0px)' }}
           transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
-          // 🛠️ পরিবর্তন ২: leading-[1.2] কমিয়ে leading-[1.1] এবং mb-6 কমিয়ে mb-4 করা হয়েছে
           className="text-4xl sm:text-[40px] md:text-[64px] !font-medium font-heading leading-[1.1] mb-4 text-[#0A0A0A] w-full"
         >
           {settings.hero_headline ? (
@@ -40,7 +38,6 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          // 🛠️ পরিবর্তন ৩: mb-8 কমিয়ে mb-5 করা হয়েছে (ট্যাগলাইন ও বাটনের গ্যাপ কমবে)
           className="text-[15px] sm:text-[16px] text-[#777777] max-w-[600px] mb-5 mx-auto leading-relaxed px-2"
         >
           {settings.hero_subheadline || "Thumbnail Artist & Strategist helping creators grow through powerful visuals."}
@@ -50,12 +47,10 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="relative inline-flex items-center justify-center mt-2"
+          className="relative inline-flex items-center justify-center mt-2 p-2"
         >
           {/* Arrow Animation */}
-          <div
-            className="absolute -left-12 sm:-left-16 md:-left-24 -top-4 text-red-500 pointer-events-none"
-          >
+          <div className="absolute -left-12 sm:-left-16 md:-left-24 -top-4 text-red-500 pointer-events-none">
             <svg width="80" height="80" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(-10deg)' }}>
               <motion.path 
                 d="M 15 85 C 10 40, 30 25, 85 50"
@@ -72,15 +67,28 @@ export function Hero() {
             </svg>
           </div>
           
-          {/* Animated Gradient Button */}
+          {/* 🛠️ Update: New Button with Text/Arrow Animation */}
           <motion.a
             href={settings.hire_me_link || "#contact"}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-3.5 bg-gradient-to-r from-accent to-[#FFB075] text-white font-medium rounded-full shadow-[0_4px_14px_0_rgba(255,92,0,0.39)] hover:shadow-[0_6px_25px_rgba(255,92,0,0.5)] transition-shadow duration-300 border border-white/20 relative overflow-hidden group"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="group relative flex items-center justify-center px-8 py-3.5 bg-gradient-to-r from-accent to-[#FF9D5C] text-white font-medium rounded-full shadow-[0_4px_14px_0_rgba(255,92,0,0.39)] hover:shadow-[0_8px_25px_rgba(255,92,0,0.5)] transition-all duration-300 border border-white/10"
           >
-            <span className="relative z-10">Book a Project</span>
-            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:animate-[shimmer_1s_infinite] z-0"></div>
+            {/* Hover Shine Fill */}
+            <div className="absolute inset-0 rounded-full overflow-hidden">
+              <div className="absolute inset-0 bg-white/20 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+            </div>
+            
+            {/* Text & Icon Container */}
+            <span className="relative z-10 flex items-center gap-2">
+              <span>Book a Project</span>
+              {/* Arrow slides in and expands */}
+              <div className="w-0 overflow-hidden transition-all duration-300 group-hover:w-5 flex items-center opacity-0 group-hover:opacity-100 -mr-2 group-hover:mr-0">
+                <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </div>
+            </span>
           </motion.a>
         </motion.div>
       </div>
