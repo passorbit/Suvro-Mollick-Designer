@@ -28,9 +28,7 @@ export function PortfolioGallery() {
 
   if (loading) {
     return (
-      <section id="work" className="pb-24 overflow-hidden min-h-[700px]">
-        {/* ফাঁকা স্পেস: লেআউট জাম্প করবে না এবং কোনো সাদা বক্সও আসবে না */}
-      </section>
+      <section id="work" className="pb-24 overflow-hidden min-h-[700px]"></section>
     );
   }
 
@@ -43,13 +41,14 @@ export function PortfolioGallery() {
   const finalRow3 = row3Items.length > 0 ? row3Items : [...fallbackThumbnails.slice(4), ...fallbackThumbnails.slice(0, 4)];
 
   const MarqueeRow = ({ items, reverse = false }: { items: any[], reverse?: boolean }) => (
-    <div className="flex overflow-x-hidden overflow-y-visible mb-6"> {/* গ্যাপ কিছুটা বাড়ানো হয়েছে */}
-      <div className={`flex w-fit overflow-visible py-[12px] items-center gap-4 sm:gap-6 hover:[animation-play-state:paused] ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}>
+    // 🛠️ Update: mb-6 থেকে mb-3 করা হয়েছে (Row-এর ভেতরের গ্যাপ কমানো হয়েছে)
+    <div className="flex overflow-x-hidden overflow-y-visible mb-3"> 
+      <div className={`flex w-fit overflow-visible py-[8px] items-center gap-4 sm:gap-6 hover:[animation-play-state:paused] ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}>
         {[...items, ...items, ...items, ...items].map((item, i) => (
           <div
             key={`${item.id}-${i}`}
-            // 🛠️ আপডেট: বর্ডার মুছে ফেলা হয়েছে, সাইজ বড় করা হয়েছে (w-480px), এবং হোভার অ্যানিমেশন যোগ করা হয়েছে
-            className="relative w-[340px] h-[191px] sm:w-[420px] sm:h-[236px] lg:w-[480px] lg:h-[270px] shrink-0 rounded-[16px] overflow-hidden group flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.08)] transition-transform duration-300 hover:scale-[1.02]"
+            // 🛠️ Update: shadow রিমুভ করা হয়েছে
+            className="relative w-[340px] h-[191px] sm:w-[420px] sm:h-[236px] lg:w-[480px] lg:h-[270px] shrink-0 rounded-[16px] overflow-hidden group flex items-center justify-center transition-transform duration-300 hover:scale-[1.02]"
           >
             {item.image_url ? (
               <>
