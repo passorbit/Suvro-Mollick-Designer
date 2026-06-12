@@ -49,6 +49,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="relative inline-flex items-center justify-center mt-2"
         >
+          {/* Arrow Animation */}
           <div
             className="absolute -left-12 sm:-left-16 md:-left-24 -top-4 text-red-500 pointer-events-none"
           >
@@ -67,12 +68,18 @@ export function Hero() {
               />
             </svg>
           </div>
-          <a
+          
+          {/* 🛠️ Update: Animated Gradient Button */}
+          <motion.a
             href={settings.hire_me_link || "#contact"}
-            className="px-8 py-3.5 bg-accent text-white font-normal rounded-full hover:bg-accent/90 transition-colors"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-8 py-3.5 bg-gradient-to-r from-accent to-[#FFB075] text-white font-medium rounded-full shadow-[0_4px_14px_0_rgba(255,92,0,0.39)] hover:shadow-[0_6px_25px_rgba(255,92,0,0.5)] transition-shadow duration-300 border border-white/20 relative overflow-hidden group"
           >
-            Book a Project
-          </a>
+            <span className="relative z-10">Book a Project</span>
+            {/* Hover Shine Effect */}
+            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:animate-[shimmer_1s_infinite] z-0"></div>
+          </motion.a>
         </motion.div>
       </div>
     </section>
