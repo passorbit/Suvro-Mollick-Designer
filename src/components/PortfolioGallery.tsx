@@ -26,7 +26,6 @@ export function PortfolioGallery() {
     fetchItems();
   }, []);
 
-  // 🛠️ সমাধান: ডেটা ফেচ হওয়ার সময় সাদা Placeholder দেখানোর বদলে সেকশনটি ফাঁকা থাকবে
   if (loading) {
     return (
       <section id="work" className="pb-24 overflow-hidden min-h-[700px]">
@@ -44,12 +43,13 @@ export function PortfolioGallery() {
   const finalRow3 = row3Items.length > 0 ? row3Items : [...fallbackThumbnails.slice(4), ...fallbackThumbnails.slice(0, 4)];
 
   const MarqueeRow = ({ items, reverse = false }: { items: any[], reverse?: boolean }) => (
-    <div className="flex overflow-x-hidden overflow-y-visible mb-4">
-      <div className={`flex w-fit overflow-visible py-[8px] items-center gap-4 hover:[animation-play-state:paused] ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}>
+    <div className="flex overflow-x-hidden overflow-y-visible mb-6"> {/* গ্যাপ কিছুটা বাড়ানো হয়েছে */}
+      <div className={`flex w-fit overflow-visible py-[12px] items-center gap-4 sm:gap-6 hover:[animation-play-state:paused] ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}>
         {[...items, ...items, ...items, ...items].map((item, i) => (
           <div
             key={`${item.id}-${i}`}
-            className="relative w-[380px] h-[220px] shrink-0 rounded-[12px] overflow-hidden group bg-[#FFFFFF] flex items-center justify-center border-[3px] border-[rgba(255,255,255,0.9)] shadow-[0px_4px_5px_0px_rgba(0,0,0,0.2)]"
+            // 🛠️ আপডেট: বর্ডার মুছে ফেলা হয়েছে, সাইজ বড় করা হয়েছে (w-480px), এবং হোভার অ্যানিমেশন যোগ করা হয়েছে
+            className="relative w-[340px] h-[191px] sm:w-[420px] sm:h-[236px] lg:w-[480px] lg:h-[270px] shrink-0 rounded-[16px] overflow-hidden group flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.08)] transition-transform duration-300 hover:scale-[1.02]"
           >
             {item.image_url ? (
               <>
@@ -67,7 +67,9 @@ export function PortfolioGallery() {
                 />
               </>
             ) : (
-              <span className="text-black/10 font-bold text-xl rotate-12 transform origin-center select-none">Placeholder</span>
+              <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                 <span className="text-black/10 font-bold text-xl rotate-12 transform origin-center select-none">Placeholder</span>
+              </div>
             )}
           </div>
         ))}
